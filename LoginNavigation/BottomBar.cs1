@@ -1,0 +1,468 @@
+﻿
+using LoginNavigation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xamarin.Forms;
+
+namespace MobiSave.Droid.UI.XamarinForms.Controls
+{
+    public class FooterBar
+    {
+        string src1, src2, src3, src4, src5, clor1, clor2, clor3, clor4, clor5;
+        readonly TapGestureRecognizer _tapGestureRecognizer = new TapGestureRecognizer();
+
+
+        public Grid gridView = null;
+
+        public void Default()
+        {
+            if (App.strcurrentScreen == "OffersTabbed")
+            {
+                src1 = "female_on.png"; src2 = "icon.png"; src3 = "male_on.png";
+                clor1 = "#37bdd4"; clor2 = "#8a8a8a"; clor3 = "#8a8a8a"; clor4 = "#8a8a8a"; clor5 = "#8a8a8a";
+            }
+            else if (App.strcurrentScreen == "Saved")
+            {
+                src1 = "female_on.png"; src2 = "icon.png"; src3 = "male_on.png.png"; 
+                clor1 = "#8a8a8a"; clor2 = "#37bdd4"; clor3 = "#8a8a8a"; clor4 = "#8a8a8a"; clor5 = "#8a8a8a";
+            }
+            else if (App.strcurrentScreen == "Reedem")
+            {
+                src1 = "dfemale_on.png"; src2 = "icon.png"; src3 = "male_on.png.png"; 
+                clor1 = "#8a8a8a"; clor2 = "#8a8a8a"; clor3 = "#37bdd4"; clor4 = "#8a8a8a"; clor5 = "#8a8a8a";
+            }
+        
+
+        }
+		public Page page { get; set; }
+        public FooterBar(bool visibility = true, Grid oldGrid = null)
+        {
+            App._footerType = FooterType.basic;
+
+            gridView = new Grid()
+            {
+                IsVisible = visibility,
+                BackgroundColor = Color.FromHex("#14000000"),
+                RowDefinitions = { new RowDefinition() { Height = 80 } },
+                ColumnDefinitions = {(new ColumnDefinition (){ Width = new GridLength (.5, GridUnitType.Star) }),
+                    (new ColumnDefinition (){ Width = new GridLength (.5, GridUnitType.Star) }),
+                    (new ColumnDefinition (){ Width = new GridLength (.5, GridUnitType.Star) }),
+                    (new ColumnDefinition (){ Width = new GridLength (.5, GridUnitType.Star) }),
+                    (new ColumnDefinition (){ Width = new GridLength (.5, GridUnitType.Star) })
+                },
+                VerticalOptions = LayoutOptions.EndAndExpand
+            };
+
+            //if (oldGrid != null) {
+            //    ReCreateFooterBar(oldGrid);
+            //}
+            //else {
+            //    Default();
+
+            //    bool isCameraLabelVisible = true;
+            //    if (AppState.CurrentMemberOffers != null && AppState.CurrentMemberOffers.Any(o => o.IsSelected)) {
+            //        src3 = "camera_on.png";
+            //        isCameraLabelVisible = false;
+            //    }
+
+                gridView.Children.Add(
+                    new StackLayout {
+                        StyleId = src1,
+                        GestureRecognizers = { _tapGestureRecognizer },
+                        Orientation = StackOrientation.Vertical,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        Children = {
+                            new Image {Source = src1},
+                            new Label(){Text = "Deals", TextColor= Color.FromHex(clor1)}
+                        }
+                    }, 0, 0);
+
+                gridView.Children.Add(
+                    new StackLayout {
+                        StyleId = src2,
+                        GestureRecognizers = { _tapGestureRecognizer },
+                        Orientation = StackOrientation.Vertical,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        Children = {
+                            new Image {Source = src2},
+                            new Label(){Text = "Saved", TextColor= Color.FromHex(clor2)}
+                        }
+                    }, 1, 0);
+
+                var stackC = new StackLayout {
+                    StyleId = src3,
+                    Orientation = StackOrientation.Vertical,
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    Children = {
+                        new Image { Source = src3 },
+                        new Label (){ Text = "Redeem", TextColor = Color.FromHex (clor3), IsVisible = isCameraLabelVisible},
+                    }
+                };
+
+                //if (AppState.CurrentMemberOffers != null && AppState.CurrentMemberOffers.Any(o => o.IsSelected)) {
+                //    stackC.GestureRecognizers.Clear();
+                //    stackC.GestureRecognizers.Add(_tapGestureRecognizer);
+                //}
+
+                gridView.Children.Add(stackC, 2, 0);
+
+                var relativelayout = new RelativeLayout { BackgroundColor = Color.FromHex("#ffb300"), IsVisible = !isCameraLabelVisible };
+                relativelayout.Children.Add(new Image { Source = "redeemTop.png", StyleId = src3 },
+                    Constraint.Constant(0),
+                    Constraint.Constant(-46),
+                    Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Width;
+                    }), Constraint.RelativeToParent((parent) =>
+                    {
+                        return parent.Height;
+                    }));
+
+                //var CameraImageForRelativeLayout = new Image { Source = "camera_on.png", StyleId = src3 };
+                //relativelayout.Children.Add(CameraImageForRelativeLayout,
+                //        Constraint.RelativeToParent((parent) => {
+                //            return parent.Width * 0.25;
+                //        }),
+                //        Constraint.Constant(10),
+                //        Constraint.RelativeToParent((parent) => {
+                //            return parent.Width / 2;
+                //        }),
+                //        Constraint.RelativeToParent((parent) => {
+                //            return parent.Height / 2;
+                //        })
+                //    );
+
+                //var CameraWordForRelativeLayout = new Label() { Text = "Redeem", TextColor = Color.FromHex("#ffffff") };
+                //relativelayout.Children.Add(CameraWordForRelativeLayout,
+                //        Constraint.RelativeToParent((parent) => {
+                //            return parent.Width / 2 - 26;
+                //        }),
+                //        Constraint.Constant(40),
+                //        Constraint.RelativeToParent((parent) => {
+                //            return parent.Width;
+                //        }), Constraint.RelativeToParent((parent) => {
+                //            return parent.Height / 2;
+                //        })
+                //    );
+
+                //if (AppState.CurrentMemberOffers != null && AppState.CurrentMemberOffers.Any(o => o.IsSelected)) {
+                //    relativelayout.GestureRecognizers.Clear();
+                //    relativelayout.GestureRecognizers.Add(_tapGestureRecognizer);
+                //}
+
+                gridView.Children.Add(
+                    relativelayout, 2, 0);
+
+                gridView.Children.Add(
+                    new StackLayout {
+                        StyleId = src4,
+                        GestureRecognizers = { _tapGestureRecognizer },
+                        Orientation = StackOrientation.Vertical,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        Children = {
+                        new Image {Source = src4},
+                        new Label(){Text = "Submitted", TextColor= Color.FromHex(clor4)}
+                        }
+                    }, 3, 0);
+
+                gridView.Children.Add(
+                    new StackLayout {
+                        StyleId = src5,
+                        GestureRecognizers = { _tapGestureRecognizer },
+                        Orientation = StackOrientation.Vertical,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        Children = {
+                        new Image {Source = src5, VerticalOptions = LayoutOptions.StartAndExpand, HeightRequest = 18.6},
+                        new Label(){Text = "More", TextColor= Color.FromHex(clor5),VerticalOptions = LayoutOptions.End}
+                        }
+                    }, 4, 0);
+
+
+                _tapGestureRecognizer.Tapped += async (object sender, EventArgs e) => {
+                    //App._footerBar = this.gridView;
+
+                    try
+                    {
+						Layout<View> currentGrid;
+						if(sender is StackLayout)
+                        	currentGrid = (sender as StackLayout).Parent as Grid;
+						else
+							currentGrid = (sender as RelativeLayout).Parent as Grid;
+						
+//                        foreach (var item in currentGrid.Children)
+//                        {
+//                            var stck = (item as StackLayout);
+//                            try {
+//                                (stck.Children[0] as Image).Source = stck.StyleId.Replace("on", "off");
+//                                (stck.Children[1] as Label).TextColor = Color.FromHex("#8a8a8a");
+//                                (stck.Children[1] as Label).IsVisible = true;
+//                            }
+//                            catch (Exception) {
+//                                // ignored
+//                            }
+//                        }
+
+                        if ((sender.GetType() == typeof(StackLayout)))
+                        {
+                            var stack = (StackLayout)sender;
+
+                            if (stack != null && stack.Children.Count > 0) {
+                                var img = (Image)stack.Children[0];
+                                var lbl = (Label)stack.Children[1];
+                                lbl.IsVisible = true;
+
+								if(stack.StyleId.Contains("deal") || stack.StyleId.Contains("save") || stack.StyleId.Contains("submit") || stack.StyleId.Contains("more"))
+                                {
+
+									foreach (var item in currentGrid.Children)
+									{
+										var stck = (item as StackLayout);
+										try {
+											(stck.Children[0] as Image).Source = stck.StyleId.Replace("on", "off");
+											(stck.Children[1] as Label).TextColor = Color.FromHex("#8a8a8a");
+											(stck.Children[1] as Label).IsVisible = true;
+										}
+										catch (Exception) {
+											// ignored
+										}
+									}
+								}
+
+                                lbl.TextColor = Color.FromHex("#37bdd4");
+                                img.Source = stack.StyleId.Replace("off", "on");
+
+                                if (stack.StyleId.Contains("deal")) {
+                                    App.strcurrentScreen = "OffersTabbed";
+                                    App.Current.MainPage = new MainTabPage();
+                                    if (Convert.ToInt32(Android.OS.Build.VERSION.Sdk) > 19)
+                                        Application.Current.MainPage.TranslationY = 15;
+                                }
+                                else if (stack.StyleId.Contains("save")) {
+                                    App.strcurrentScreen = "Saved";
+                                    App.Current.MainPage = new NavigationPage(new DealPage(new Deal {
+                                        DealName = "Saved",
+                                        DealCount = 0
+                                    }));
+
+                                    App.Current.MainPage.Title = "SAVED";
+
+                                    if (Convert.ToInt32(Android.OS.Build.VERSION.Sdk) > 19)
+                                        Application.Current.MainPage.TranslationY = 15;
+                                }
+
+                                else if (stack.StyleId.Contains("submit"))
+                                {
+                                    App.strcurrentScreen = "SubmittedReceiptsList";
+                                    App.Current.MainPage = new NavigationPage(new Receipts.SubmittedReceiptsList());
+                                    if (Convert.ToInt32(Android.OS.Build.VERSION.Sdk) > 19)
+                                        Application.Current.MainPage.TranslationY = 15;
+
+                                }
+
+                                else if (stack.StyleId.Contains("more"))
+                                {
+                                    App.strcurrentScreen = "More";
+                                    App.Current.MainPage = new NavigationPage(new NewMorePage());
+                                    if (Convert.ToInt32(Android.OS.Build.VERSION.Sdk) > 19)
+                                        Application.Current.MainPage.TranslationY = 15;
+                                }
+//                                else
+//                                {
+//									try {
+//										var contentLayout = currentGrid.Parent as StackLayout;
+//										if (contentLayout == null)
+//											contentLayout = this.gridView.Parent as StackLayout;
+
+////										if (App.strcurrentScreen == "OffersTabbed" && App.currentScreen != AppScreen.OfferCardView)
+////										{
+////											try{
+////												var mainTab = ((contentLayout.Parent as FooterBarPage).Parent as MainTabPage);
+////												OffersTabbed offerTab =  mainTab.Detail.CurrentPage as OffersTabbed;	
+////												var currentDealPage = offerTab.CurrentPage as DealPage;
+////												currentDealPage.ShowCallDialog(currentDealPage.MainView);
+////												//mainTab.Navigation.PushModalAsync(new MorePage());
+////												//App.Current.MainPage.Navigation.PushModalAsync (new MorePage());
+////												return;
+////											}catch(Exception ex){
+////											}
+////										}
+
+//										if(page != null && (page is OffersSlideView || page is DealPage || page is SubmittedReceiptsList || page is ViewSettings)){
+//											try{
+//												lbl.TextColor = Color.FromHex("#8a8a8a");
+//												img.Source = stack.StyleId.Replace("on", "off");
+
+//												MobiUINavBarContentPage slideView = page as MobiUINavBarContentPage;
+//												slideView.ShowCallDialog(slideView.MainView);
+//												return;
+//											}catch(Exception ex){
+//											}
+
+//										}else if(page != null && page is FooterBarPage){
+//											var tabPage = page.Parent as MainTabPage;
+//											tabPage.Children.Add(new MoreAwesomePage());
+//											return;
+//										}
+                                    
+//                                        lbl.TextColor = Color.FromHex("#8a8a8a");
+//                                        img.Source = stack.StyleId.Replace("on", "off");
+
+//                                        //var contentLayout = currentGrid.Parent as StackLayout;
+//                                        if (contentLayout == null)
+//                                            contentLayout = this.gridView.Parent as StackLayout;
+
+//                                        var newPop = new RelativeLayout();
+//                                        newPop.HeightRequest = DeviceDisplaySettings.defaultheight / 3;
+
+//                                        var backgroundImage = new Image {
+//                                            Source = new FileImageSource { File = "menuTop.png" },
+//                                        };
+
+//                                        newPop.Children.Add(backgroundImage,
+//                                            Constraint.Constant(0),
+//                                            Constraint.RelativeToParent((parent) => {
+//                                                if (App.strcurrentScreen == "More" && App.currentScreen != AppScreen.EditSettings && DeviceDisplaySettings.defaultheight > 1000)
+//                                                    return (parent.Height / -1.75) + 25; //return (parent.Height/-1.90)+2;
+//                                                else
+//                                                    return (parent.Height / -1.75) + 2;
+//                                            }),
+//                                            Constraint.RelativeToParent((parent) => {
+//                                                return parent.Width;
+//                                            }),
+//                                            Constraint.RelativeToParent((parent) => {
+//                                                return parent.Height;
+//                                            }));
+
+//                                        var popFooter = new PopupLayout { oldstrPage = App.strcurrentScreen };
+//                                        newPop.Children.Add(popFooter,
+//                                            Constraint.Constant(0),
+//                                            Constraint.Constant(0),
+//                                            Constraint.RelativeToParent((parent) => {
+//                                                return parent.Width;
+//                                            }),
+//                                            Constraint.RelativeToParent((parent) => {
+//                                                return parent.Height;
+//                                            })
+//                                        );
+
+//#if DEBUG || __QA__
+//                                        AppState.Message = string.Format(" => Screen Name [{0}], Current Screen [{1}], Content layout [{2}]-[{3}]", App.strcurrentScreen, App.currentScreen, contentLayout.Height, contentLayout.Width);
+//#endif
+
+//                                        // special handling on certain screens for the more menu pop-up
+//                                        if (App.strcurrentScreen == "Saved" && (App.currentScreen != AppScreen.CaptureReceiptImage)) {
+//                                            newPop.TranslationY = GetTranslationY(DeviceDisplaySettings.defaultheight * -0.1, DeviceDisplaySettings.defaultheight * -0.15, DeviceDisplaySettings.defaultheight * -0.18, -10);
+//                                        }
+//                                        else if (App.strcurrentScreen == "More" && App.currentScreen != AppScreen.EditSettings) {
+//                                            newPop.TranslationY = GetTranslationY(DeviceDisplaySettings.defaultheight * 0.4, 15, -50, 0);
+//                                        }
+//                                        else if (App.strcurrentScreen == "SubmittedReceiptsList") {
+//                                            // if receipts exists, use a different setting
+//                                            newPop.TranslationY = AppState.MemberReceipts.Any() 
+//                                                                        ? GetTranslationY(0, 20, 0, 0)
+//                                                                        : GetTranslationY(DeviceDisplaySettings.defaultheight * -0.1, DeviceDisplaySettings.defaultheight * -0.15, DeviceDisplaySettings.defaultheight * -0.17, 0);
+//                                        }
+//                                        else if (App.strcurrentScreen == "OffersTabbed") {
+//                                            newPop.TranslationY = GetTranslationY(0, 0, -1, 0);
+//                                        }
+//                                        else {
+//                                            newPop.TranslationY = 0;
+//                                        }
+//#if DEBUG || __QA__
+//                                        AppState.Message = string.Format(" => Translation Y [{0}]", newPop.TranslationY);
+//#endif
+
+//                                        contentLayout.Children.Add(newPop);
+
+//                                        if (App.strcurrentScreen == "OffersTabbed" && App.currentScreen != AppScreen.OfferCardView)
+//                                        {
+//                                            ((contentLayout.Parent as FooterBarPage).Parent as MainTabPage).Master.TranslationY -= DeviceDisplaySettings.defaultheight * 0.165;
+//                                        }
+
+//                                        if (contentLayout != null) {
+//                                            if (contentLayout.Children.IndexOf(currentGrid) > -1) {
+//                                                contentLayout.Children.Remove(currentGrid);
+//                                            }
+//                                            else
+//                                                contentLayout.Children.Remove(this.gridView);
+//                                        }
+//                                        App._footerBar = popFooter;
+//                                    }
+//                                    catch (Exception) {
+//                                        // ignored
+//                                    }
+//                                }
+                            }
+                        }
+                        else
+                        {
+                            if (((RelativeLayout)sender).Children[0].StyleId.Contains("camera"))
+                            {
+                                if (typeof(DealPage) == (((RelativeLayout)sender).Parent.Parent.Parent).GetType())
+                                {
+                                    ((DealPage)(((RelativeLayout)sender).Parent.Parent.Parent)).cameraButtonClicked_Tapped(sender, e);
+                                }
+                                else
+                                {
+                                    IEnumerable<Page> list = App.Current.MainPage.Navigation.ModalStack.Where(x => x.GetType() == typeof(CameraPage));
+                                    if (list.Count() == 0)
+                                    {
+                                        await App.Current.MainPage.Navigation.PushModalAsync(new CameraPage());
+                                    }
+                                }
+                            }
+                        }
+                        return;
+                    }
+                    catch
+                    {
+                    }
+                };
+                App._footerBar = this.gridView;
+            }
+        }
+
+        private static double GetTranslationY(double valueWhenHeightGreaterThan1000, double valueWhenHeightBetween600And700, double valueWhenHeightLessThan600, double defaultValue)
+        {
+            return DeviceDisplaySettings.defaultheight > 1000
+                ? valueWhenHeightGreaterThan1000
+                : (DeviceDisplaySettings.defaultheight >= 600 && DeviceDisplaySettings.defaultheight <= 700)
+                    ? valueWhenHeightBetween600And700
+                    : DeviceDisplaySettings.defaultheight < 600
+                        ? valueWhenHeightLessThan600
+                        : defaultValue;
+        }
+
+        void ReCreateFooterBar(Grid oldGrid)
+        {
+            gridView.Children.Add(
+                oldGrid.Children[0], 0, 0);
+
+            gridView.Children.Add(
+                oldGrid.Children[1], 1, 0);
+
+            gridView.Children.Add(
+                oldGrid.Children[2], 2, 0);
+
+            gridView.Children.Add(
+                oldGrid.Children[3], 2, 0);
+
+            gridView.Children.Add(
+                oldGrid.Children[4], 3, 0);
+
+            gridView.Children.Add(
+                oldGrid.Children[5], 4, 0);
+
+        }
+
+    }
+}
+
+
+#endif

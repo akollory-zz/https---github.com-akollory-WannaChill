@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<widget:LinearLayout xmlns:android ="http://schemas.android.com/apk/res/android" 
+	  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	  xmlns:widget="clr-namespace:Android.Widget;assembly=Mono.Android"
+	  x:Class="LoginNavigation.MainPage"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:padding="5dp">
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="245dp"
+        android:layout_gravity="center_horizontal">
+        <widget:TextView
+            android:text="Basic CardView"
+            android:layout_marginTop="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </android.support.v7.widget.CardView>
+</widget:LinearLayout>

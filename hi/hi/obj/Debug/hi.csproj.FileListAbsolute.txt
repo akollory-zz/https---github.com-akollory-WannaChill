@@ -1,0 +1,10 @@
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\hi.dll
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\hi.pdb
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\Xamarin.Forms.Core.dll
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\Xamarin.Forms.Platform.dll
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\Xamarin.Forms.Core.xml
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\bin\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\obj\Debug\hi.csprojResolveAssemblyReference.cache
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\obj\Debug\hi.dll
+C:\Users\Anita Kollory\Documents\Projects\hi\hi\obj\Debug\hi.pdb
